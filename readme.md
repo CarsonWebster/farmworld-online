@@ -40,6 +40,7 @@ This allows rapid prototyping of the core loop before migrating to a Rust backen
 Once the MVP is working, migrate to a **Rust backend** for scalability, persistence, and security.
 
 ### 🏗️ Architecture
+```
 +-------------------+        +-------------------+
 |   Godot Client    | <----> |   Gateway Server  |  (axum + WebSockets)
 | (PC /Mobile/Web)  |        |  (Auth, Routing)  |
@@ -58,7 +59,7 @@ v                                           v
 |   Database (SQL)  |                         |   Cache (Redis)   |
 | Postgres (truth)  |                         | Timers, sessions  |
 +-------------------+                         +-------------------+
-
+```
 ### 🔄 Example Flow
 1. **Login**: Client logs in via OAuth → Gateway verifies → issues JWT.
 2. **Connect**: Client opens WebSocket → Gateway authenticates → routes to Game Logic.

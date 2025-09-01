@@ -44,13 +44,13 @@ Once the MVP is working, migrate to a **Rust backend** for scalability, persiste
 |   Godot Client    | <----> |   Gateway Server  |  (axum + WebSockets)
 | (PC /Mobile/Web)  |        |  (Auth, Routing)  |
 +-------------------+        +-------------------+
-                             |
-                             v
-                    +-------------------+
-                    |   Game Logic Svc  |  (Bevy ECS)
-                    |  (Authoritative)  |
-                    +-------------------+
-                      |
+							 |
+							 v
+					+-------------------+
+					|   Game Logic Svc  |  (Bevy ECS)
+					|  (Authoritative)  |
+					+-------------------+
+					  |
 +---------------------+---------------------+
 |                                           |
 v                                           v
@@ -122,10 +122,10 @@ use chrono::{DateTime, Utc};
 
 #[derive(Component)]
 pub struct Crop {
-    pub crop_type: String,
-    pub planted_at: DateTime<Utc>,
-    pub growth_duration: i64, // seconds
-    pub owner_id: uuid::Uuid,
+	pub crop_type: String,
+	pub planted_at: DateTime<Utc>,
+	pub growth_duration: i64, // seconds
+	pub owner_id: uuid::Uuid,
 }
 ```
 
@@ -137,25 +137,25 @@ use diesel::prelude::*;
 use crate::schema::crops;
 
 pub fn crop_growth_system(
-    mut query: Query<(Entity, &Crop)>,
-    mut commands: Commands,
-    pool: Res<DbPool>, // Diesel connection pool
+	mut query: Query<(Entity, &Crop)>,
+	mut commands: Commands,
+	pool: Res<DbPool>, // Diesel connection pool
 ) {
-    let now = Utc::now();
-    for (entity, crop) in query.iter() {
-        let ready_time = crop.planted_at + chrono::Duration::seconds(crop.growth_duration);
-        if now >= ready_time {
-            // Harvest ready
-            println!("Crop ready: {:?}", crop.crop_type);
+	let now = Utc::now();
+	for (entity, crop) in query.iter() {
+		let ready_time = crop.planted_at + chrono::Duration::seconds(crop.growth_duration);
+		if now >= ready_time {
+			// Harvest ready
+			println!("Crop ready: {:?}", crop.crop_type);
 
-            // Update Postgres
-            let conn = &mut pool.get().unwrap();
-            diesel::delete(crops::table.find(entity.id())).execute(conn).unwrap();
+			// Update Postgres
+			let conn = &mut pool.get().unwrap();
+			diesel::delete(crops::table.find(entity.id())).execute(conn).unwrap();
 
-            // Remove entity from ECS
-            commands.entity(entity).despawn();
-        }
-    }
+			// Remove entity from ECS
+			commands.entity(entity).despawn();
+		}
+	}
 }
 ```
 
@@ -176,4 +176,3 @@ CREATE TABLE crops (
 - Database: Postgres with connection pooling (pgbouncer). Scale read replicas if needed.
 - Cache: Redis for sessions, timers, pub/sub between servers.
 - Containers: Docker Compose for dev, Kubernetes for production.
-

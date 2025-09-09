@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://u6jd07dy34f7"]
+
+[ext_resource type="Texture2D" uid="uid://c0cq560m2apar" path="res://assets/YouTube Action RPG Resources/world/bush.png" id="1_3piv8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uvv77"]
+
+[node name="Bush" type="StaticBody2D"]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -10)
+texture = ExtResource("1_3piv8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_uvv77")

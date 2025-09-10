@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnwykk6h4d1vk"]
+
+[ext_resource type="Script" uid="uid://8ajn0i67mtkh" path="res://scenes/test/other_player.gd" id="1_fhqmj"]
+[ext_resource type="Texture2D" uid="uid://cofcn4dd8qym4" path="res://assets/YouTube Action RPG Resources/player/player.png" id="2_rjs28"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_60koi"]
+radius = 4.0
+height = 14.0
+
+[node name="OtherPlayer" type="CharacterBody2D"]
+y_sort_enabled = true
+motion_mode = 1
+script = ExtResource("1_fhqmj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("2_rjs28")
+hframes = 60
+frame = 18
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_60koi")

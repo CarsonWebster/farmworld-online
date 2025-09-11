@@ -315,15 +315,15 @@ pub fn process_commands(
             EcsCommand::SpawnPlayer { player_id } => {
                 commands.spawn((
                     Player { id: player_id },
-                    Position { x: 0.0, y: 0.0 },
+                    Position { x: 365.0, y: 175.0 },
                     Velocity { dx: 0.0, dy: 0.0 },
                 ));
 
                 // Notify clients about new player
                 let join_msg = ServerMessage::PlayerJoined {
                     player_id,
-                    x: 0.0,
-                    y: 0.0,
+                    x: 365.0,
+                    y: 175.0,
                 };
                 let _ = sim_to_client
                     .tx

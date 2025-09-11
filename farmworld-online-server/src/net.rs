@@ -89,7 +89,11 @@ mod tests {
         // Verify command was sent
         let received = rx.try_recv().unwrap();
         match received {
-            EcsCommand::UpdateVelocity { player_id: pid, dx, dy } => {
+            EcsCommand::UpdateVelocity {
+                player_id: pid,
+                dx,
+                dy,
+            } => {
                 assert_eq!(pid, player_id);
                 assert_eq!(dx, 1.0);
                 assert_eq!(dy, 2.0);
@@ -174,9 +178,6 @@ pub async fn run_websocket_server(
                 clients.insert(player_id, client_sink);
             }
 
-            // Notify sim that player joined
-            let _ = client_to_sim_tx_clone.send(EcsCommand::SpawnPlayer { player_id });
-
             // Handle incoming messages from this client
             while let Some(msg) = client_stream.next().await {
                 match msg {
@@ -188,6 +189,9 @@ pub async fn run_websocket_server(
                                 ClientMessage::Join => {
                                     // Join is handled by SpawnPlayer above
                                     println!("Player {} confirmed join", player_id);
+                                    // Notify sim that player joined
+                                    let _ = client_to_sim_tx_clone
+                                        .send(EcsCommand::SpawnPlayer { player_id });
                                 }
                                 ClientMessage::Move { dx, dy } => {
                                     let _ = client_to_sim_tx_clone

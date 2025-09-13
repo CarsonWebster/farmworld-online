@@ -738,13 +738,13 @@ sources/1 = SubResource("TileSetAtlasSource_fddy8")
 [node name="TestWorld" type="Node2D"]
 y_sort_enabled = true
 
-[node name="GameManager" type="Node" parent="."]
-script = ExtResource("5_70kyo")
-
 [node name="PlayerManager" type="Node" parent="."]
 script = ExtResource("2_70kyo")
 player_scene = ExtResource("1_sfy6c")
 other_player_scene = ExtResource("3_ydknf")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("5_70kyo")
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 repeat_size = Vector2(320, 192)

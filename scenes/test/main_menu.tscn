@@ -374,15 +374,25 @@ text = "FarmWorld
 Online"
 horizontal_alignment = 1
 
-[node name="JoinButton" type="Button" parent="MainMenuUI/ColorRect"]
+[node name="SingleplayerButton" type="Button" parent="MainMenuUI/ColorRect"]
 layout_mode = 0
-offset_left = 10.0501
-offset_top = 19.1174
-offset_right = 510.05
-offset_bottom = 164.117
-scale = Vector2(0.0388855, 0.111892)
+offset_left = 1.02785
+offset_top = 22.4553
+offset_right = 599.028
+offset_bottom = 167.455
+scale = Vector2(0.0280891, 0.0808257)
 theme_override_font_sizes/font_size = 100
-text = "Join Game"
+text = "Singleplayer"
+
+[node name="MultiplayerButton" type="Button" parent="MainMenuUI/ColorRect"]
+layout_mode = 0
+offset_left = 19.6433
+offset_top = 22.1519
+offset_right = 617.643
+offset_bottom = 167.152
+scale = Vector2(0.0280891, 0.0808257)
+theme_override_font_sizes/font_size = 100
+text = "Multiplayer"
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 repeat_size = Vector2(320, 192)

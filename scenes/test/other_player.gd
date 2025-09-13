@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var SPEED := 100
 
 func _ready():
-	# Disable input processing for remote players
+	# Disable input processing for remote players (only in multiplayer)
 	set_process_input(false)
 	set_physics_process(false)
 	print("=== Remote Player Initialized ===")

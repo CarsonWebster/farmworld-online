@@ -9,10 +9,10 @@ y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, -10)
+position = Vector2(0, -14)
 texture = ExtResource("1_3piv8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, -10)
+position = Vector2(0, -11)
 shape = SubResource("CircleShape2D_uvv77")

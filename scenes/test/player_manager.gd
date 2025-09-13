@@ -10,7 +10,7 @@ var has_spawned_local := false
 func _ready():
 	print("=== PlayerManager Starting ===")
 	print("DEBUG: has_spawned_local = ", has_spawned_local, ", local_player_id = '", local_player_id, "'")
-	# Connect to GameManager signals
+	# Connect to GameManager signals (works for both modes, as GameManager emits signals in single-player too)
 	var game_manager = get_node("../GameManager")
 	if game_manager:
 		game_manager.connect("player_joined", _on_player_joined)

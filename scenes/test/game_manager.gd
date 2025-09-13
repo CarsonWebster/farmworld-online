@@ -11,7 +11,15 @@ var last_direction := Vector2.ZERO
 
 func _ready():
 	print("=== GameManager Starting ===")
-	connect_to_server()
+	if GameConfig.game_mode == GameConfig.GameMode.MULTIPLAYER:
+		connect_to_server()
+	else:
+		# Single-player: Simulate local join
+		print("🎮 Single-player mode: Simulating local player join")
+		var fake_player_id = "local_player"
+		var start_position = Vector2(365, 175)  # Match server spawn position
+		local_player_id = fake_player_id
+		emit_signal("player_joined", fake_player_id, start_position)
 
 func connect_to_server():
 	websocket = WebSocketPeer.new()
@@ -64,25 +72,27 @@ func send_join_message():
 		print("⚠️  Cannot send join message - WebSocket not connected")
 
 func send_movement_input():
-	if websocket.get_ready_state() == WebSocketPeer.STATE_OPEN:
-		var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	if GameConfig.game_mode == GameConfig.GameMode.MULTIPLAYER:
+		if websocket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+			var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 
-		# Only send if direction changed significantly
-		if direction.distance_to(last_direction) > 0.01:
-			last_direction = direction
+			# Only send if direction changed significantly
+			if direction.distance_to(last_direction) > 0.01:
+				last_direction = direction
 
-			var move_data = {
-				"action": "Move",
-				"data": {
-					"dx": direction.x,
-					"dy": direction.y
+				var move_data = {
+					"action": "Move",
+					"data": {
+						"dx": direction.x,
+						"dy": direction.y
+					}
 				}
-			}
-			var json_string = JSON.stringify(move_data)
-			websocket.send_text(json_string)
-			print("📤 Sent MOVE message: ", json_string)
-	else:
-		print("⚠️  Cannot send movement - WebSocket not connected")
+				var json_string = JSON.stringify(move_data)
+				websocket.send_text(json_string)
+				print("📤 Sent MOVE message: ", json_string)
+		else:
+			print("⚠️  Cannot send movement - WebSocket not connected")
+	# In single-player, movement is handled locally by player.gd
 
 func handle_server_message(message: String):
 	#print("📥 Received from server: ", message)
